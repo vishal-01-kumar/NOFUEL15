@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Challan List - NOFUEL15</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Arial', sans-serif;
+      padding: 2rem;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #161b22;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #30363d;
+    }
+    th {
+      background-color: #21262d;
+      color: #58a6ff;
+    }
+    .denied {
+      color: #f85149;
+      font-weight: bold;
+    }
+    .challan-btn {
+      background-color: #238636;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .challan-btn:hover {
+      background-color: #2ea043;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Denied Vehicles - Issue Challans</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Plate</th>
+        <th>Vehicle Age</th>
+        <th>Access Status</th>
+        <th>Timestamp</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>tyd231</td>
+        <td>16</td>
+        <td class="denied">Denied</td>
+        <td>12:00</td>
+        <td> Challan Sent </td>
+      </tr>
+      <tr>
+        <td>uvx678</td>
+        <td>16</td>
+        <td class="denied">Denied</td>
+        <td>13:24</td>
+        <td>Challan Sent</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    function sendChallan(plate, age, timestamp) {
+      fetch('http://localhost:5000/challan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plate, vehicle_age: age, timestamp })
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message || 'Challan sent');
+      })
+      .catch(err => console.error('Challan error:', err));
+    }
+  </script>
+
+</body>
+</html>
+
