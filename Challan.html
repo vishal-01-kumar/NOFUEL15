@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challan Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      color: #58a6ff;
+    }
+    a button {
+      margin-bottom: 1rem;
+      background: #21262d;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    a button:hover {
+      background: #30363d;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #30363d;
+    }
+    button.send-btn {
+      background: #21262d;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button.send-btn:hover {
+      background: #30363d;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html">
+    <button>← Back to Dashboard</button>
+  </a>
+
+  <h1>Vehicle Fuel Access Monitoring</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Number Plate</th>
+        <th>Owner Email</th>
+        <th>Status</th>
+        <th>Challan</th>
+      </tr>
+    </thead>
+    <tbody id="vehicle-table">
+      <tr>
+        <td>GJ19EQ0001</td>
+        <td>user1@example.com</td>
+        <td class="denied">Denied</td>
+        <td><button class="send-btn" onclick="sendRealChallan('GJ19EQ0001', 'user1@example.com')">Send Challan</button></td>
+      </tr>
+      <tr>
+        <td>KA18EQ0001</td>
+        <td>user2@example.com</td>
+        <td class="allowed">Allowed</td>
+        <td><button class="send-btn" disabled>✔️</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    // Initialize EmailJS with your public key
+    (function() {
+      emailjs.init("your_public_key_here"); // 🔁 Replace with your actual public key
+    })();
+
+    function sendRealChallan(plate, email) {
+      emailjs.send("your_service_id_here", "your_template_id_here", {
+        plate: plate,
+        fine: "₹5000",
+        date: new Date().toLocaleDateString(),
+        email: email
+      }).then(function(response) {
+        alert("✅ Challan sent successfully to " + email);
+      }, function(error) {
+        alert("❌ Failed to send challan. Check console.");
+        console.error(error);
+      });
+    }
+  </script>
+
+</body>
+</html>
+
+
